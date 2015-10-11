@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+          <meta charset="utf-8" />
+    <title>InAppBrowser.insertCSS Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for device API libraries to load
+    //
+    
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Global InAppBrowser reference
+ //   var iabRef = null;
+
+    // Inject our custom CSS into the InAppBrowser window
+    //
+    function changeBackgroundColor() {
+        iabRef.insertCSS({
+           code: "body { background: rgb(255,100,255);}"
+        }, function() {
+           alert("Styles Altered");
+        });
+    }
+//
+    function iabClose(event) {
+         iabRef.removeEventListener('loadstop', changeBackgroundColor);
+         iabRef.removeEventListener('exit', iabClose);
+         window.history.back();
+    }
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+         iabRef = window.open('http://apache.org', '_self', 'location=yes');
+         iabRef.addEventListener('loadstop', changeBackgroundColor);
+         iabRef.addEventListener('exit', iabClose);
+   alert("go"); 
+    }
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
